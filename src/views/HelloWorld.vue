@@ -1,18 +1,21 @@
 <template>
+  <button @click="changeMsg">changeMsg</button>
   <h1 class="hello">{{message}}</h1>
 </template>
 
 <script>
-import { toRef, ref } from 'vue'
+import { toRefs, ref } from 'vue'
 export default {
   props: {
     name: String
   },
-  setup(props) {
-    const { name } = toRef(props)
-    console.log(props.name)
-    const message = `hello ${props.name}!`
-    return { message }
+  setup(props, context) {
+    const { name } = toRefs(props)
+    let message = ref(`hello ${name.value}!`)
+    const changeMsg = () => {
+      return (message.value = 'hello world')
+    }
+    return { message, changeMsg }
   }
 }
 </script>
